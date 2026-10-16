@@ -29,20 +29,27 @@ class Backend(Protocol):
     def withdraw(self, login: int, amount: float, comment: str) -> dict: ...
     def create_user(self, data: dict) -> dict: ...
     def check_password(self, login: int, password: str, kind: str) -> bool: ...
+<<<<<<< HEAD
     def list_groups(self) -> List[dict]: ...
     def get_group(self, name: str) -> dict: ...
+=======
+>>>>>>> b50a59827a70a7449709420a7fd53947c8282e1e
 
 
 class RealBackend:
     """Wraps the existing MT5Service (Windows + MT5Manager package required)."""
 
     def __init__(self):
+<<<<<<< HEAD
         # lazy: MT5Manager only exists on Windows. The service lives at gateway/app/ in this
         # repo, but a separate top-level `app` package (old layout) is accepted too.
         try:
             from app.mt5_service import service
         except ImportError:
             from .app.mt5_service import service
+=======
+        from app.mt5_service import service  # lazy: MT5Manager only exists on Windows
+>>>>>>> b50a59827a70a7449709420a7fd53947c8282e1e
 
         self.svc = service
         self.lock = service._lock  # RLock: nested calls inside service are fine
@@ -117,6 +124,7 @@ class RealBackend:
     def check_password(self, login, password, kind):
         """kind: 'main' | 'investor' (UserPasswordCheck). True only if the password is correct."""
         return bool(self.svc.password_check(int(login), password, kind)["valid"])
+<<<<<<< HEAD
 
     # ------------------------------------------------------------ groups (real Manager data)
     def list_groups(self):
@@ -136,3 +144,5 @@ class RealBackend:
                    "currency": "Currency", "margin_call": "MarginCall",
                    "margin_stopout": "MarginStopOut"}
         return {k: d[v] for k, v in mapping.items() if v in d}
+=======
+>>>>>>> b50a59827a70a7449709420a7fd53947c8282e1e

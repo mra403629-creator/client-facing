@@ -19,7 +19,11 @@ DEFAULT_MAX_AMOUNT = float(os.getenv("GATEWAY_DEFAULT_MAX_AMOUNT", "10000"))
 
 # Ownership checks use UserGetByLogins/UserGet, which per the SDK docs only work
 # with PUMP_MODE_USERS. Do not drop USERS from this.
+<<<<<<< HEAD
 # The groups endpoints (GroupTotal/GroupNext/GroupGet) additionally need GROUPS.
 PUMP_MODE = os.getenv("GATEWAY_PUMP_MODE", "USERS|GROUPS")
+=======
+PUMP_MODE = os.getenv("GATEWAY_PUMP_MODE", "USERS")
+>>>>>>> b50a59827a70a7449709420a7fd53947c8282e1e
 
 ALL_PERMISSIONS = frozenset({"read", "deposit", "withdraw", "create_user", "user_portal"})

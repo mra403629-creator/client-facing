@@ -19,7 +19,11 @@ from typing import Optional
 
 from .errors import (Conflict, Forbidden, GatewayError, Invalid, NotFound, RateLimited,
                      Unauthorized, Upstream)
+<<<<<<< HEAD
 from .guard import GROUP_FIELDS, USER_FIELDS, Gateway, _pick
+=======
+from .guard import USER_FIELDS, Gateway, _pick
+>>>>>>> b50a59827a70a7449709420a7fd53947c8282e1e
 from .masks import match_group
 from .store import Session, Tenant
 
@@ -121,6 +125,7 @@ class Portal:
     def account(self, sess: Session) -> dict:
         return self._call("balance", self.backend.balance, sess.login)
 
+<<<<<<< HEAD
     def my_group(self, sess: Session, tenant: Tenant) -> dict:
         """The trader's OWN group only; the name comes from the live user record, never from input."""
         user = self._call("get_user", self.backend.get_user, sess.login)
@@ -133,6 +138,8 @@ class Portal:
             raise NotFound("not found")
         return _pick(g, GROUP_FIELDS)
 
+=======
+>>>>>>> b50a59827a70a7449709420a7fd53947c8282e1e
     # ------------------------------------------------------------ money requests
     def create_request(self, sess: Session, tenant: Tenant, kind: str, amount: float, comment: str) -> dict:
         if sess.scope != "trade":
