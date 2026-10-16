@@ -28,6 +28,17 @@ class FakeBackend:
         self.passwords = {1001: ("Main#1234", "Inve#1234"), 1002: ("Main#5678", "Inve#5678"),
                           2001: ("Main#2001", "Inve#2001"), 3001: ("Main#3001", "Inve#3001")}
         self.password_calls = 0
+        self.fail_group_list = False
+        self.groups = [
+            {"group": "client1\\retail", "server": "Demo", "company": "C1", "currency": "USD",
+             "margin_call": 100.0, "margin_stopout": 50.0},
+            {"group": "client1\\vip", "server": "Demo", "company": "C1", "currency": "USD",
+             "margin_call": 80.0, "margin_stopout": 30.0, "rights": 999},  # extra field must not leak
+            {"group": "client2\\retail", "server": "Demo", "company": "C2", "currency": "EUR",
+             "margin_call": 90.0, "margin_stopout": 40.0},
+            {"group": "other\\x", "server": "Demo", "company": "O", "currency": "USD",
+             "margin_call": 70.0, "margin_stopout": 20.0},
+        ]
 
     def start(self): pass
     def stop(self): pass
@@ -72,6 +83,19 @@ class FakeBackend:
             raise RuntimeError("down")
         pair = self.passwords.get(login)
         return bool(pair) and password == pair[0 if kind == "main" else 1]
+
+    def list_groups(self):
+        if self.fail_group_list:
+            raise RuntimeError("Groups need PUMP_MODE_GROUPS (secret-server-detail)")
+        return [dict(g) for g in self.groups]
+
+    def get_group(self, name):
+        if self.fail_group_list:
+            raise RuntimeError("Groups need PUMP_MODE_GROUPS (secret-server-detail)")
+        for g in self.groups:
+            if g["group"].lower() == name.lower():
+                return dict(g)
+        raise KeyError(name)
 
     def create_user(self, data):
         self.created.append(data)

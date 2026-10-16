@@ -25,11 +25,7 @@ from .store import Session, Store, Tenant
 log = logging.getLogger("gateway")
 
 
-<<<<<<< HEAD
-# ---------------------------------GR/-------------------------------- models
-=======
 # ----------------------------------------------------------------- models
->>>>>>> b50a59827a70a7449709420a7fd53947c8282e1e
 class UserCreate(BaseModel):
     group: str
     leverage: int = Field(100, ge=1, le=10000)
@@ -165,7 +161,6 @@ def create_app(backend=None, store: Store = None) -> FastAPI:
     ):
         return gw.list_users(tenant, limit, offset, group)
 
-<<<<<<< HEAD
     @app.get("/v1/groups")
     def list_groups(tenant: Tenant = Depends(current_tenant)):
         return gw.list_groups(tenant)
@@ -174,8 +169,6 @@ def create_app(backend=None, store: Store = None) -> FastAPI:
     def get_group(group: str, tenant: Tenant = Depends(current_tenant)):
         return gw.get_group(tenant, group)
 
-=======
->>>>>>> b50a59827a70a7449709420a7fd53947c8282e1e
     @app.get("/v1/users/{login}")
     def get_user(login: int, tenant: Tenant = Depends(current_tenant)):
         return gw.get_user(tenant, login)
@@ -238,13 +231,10 @@ def create_app(backend=None, store: Store = None) -> FastAPI:
     def user_account(ctx=Depends(user_ctx)):
         return portal.account(ctx[0])
 
-<<<<<<< HEAD
     @app.get("/u/v1/group")
     def user_group(ctx=Depends(user_ctx)):
         return portal.my_group(ctx[0], ctx[1])
 
-=======
->>>>>>> b50a59827a70a7449709420a7fd53947c8282e1e
     @app.post("/u/v1/requests", status_code=201)
     def user_create_request(body: UserRequestBody, ctx=Depends(user_ctx)):
         return portal.create_request(ctx[0], ctx[1], body.kind, body.amount, body.comment)

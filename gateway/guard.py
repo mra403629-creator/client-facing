@@ -36,11 +36,8 @@ CREATE_FIELDS = (
     "group", "leverage", "first_name", "last_name", "name", "email", "phone",
     "country", "city", "state", "zipcode", "address", "password", "investor_password",
 )
-<<<<<<< HEAD
 # Only these group fields ever reach a client (no rights / commission / symbol config).
 GROUP_FIELDS = ("group", "server", "company", "currency", "margin_call", "margin_stopout")
-=======
->>>>>>> b50a59827a70a7449709420a7fd53947c8282e1e
 NOT_FOUND_MSG = "not found"
 
 
@@ -120,7 +117,6 @@ class Gateway:
             "users": [_pick(u, USER_FIELDS) for u in users],
         }
 
-<<<<<<< HEAD
     def list_groups(self, tenant: Tenant) -> dict:
         """Real groups from the Manager API, narrowed to the tenant's masks."""
         self._need(tenant, "read")
@@ -140,8 +136,6 @@ class Gateway:
             raise NotFound(NOT_FOUND_MSG)
         return _pick(g, GROUP_FIELDS)
 
-=======
->>>>>>> b50a59827a70a7449709420a7fd53947c8282e1e
     def balance(self, tenant: Tenant, login: int) -> dict:
         self._need(tenant, "read")
         self._assert_owned(tenant, login, "balance")
